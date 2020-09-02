@@ -1,0 +1,4 @@
+#Tue Sep 01 21:23:24 CST 2020
+base.0=C\:\\Users\\yicchen\\batterylevel\\android\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
