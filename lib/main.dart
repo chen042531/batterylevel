@@ -57,6 +57,41 @@ class _MyHomePageState extends State<MyHomePage> {
   static const platform = const MethodChannel('samples.flutter.dev/battery');
   String _batteryLevel = 'Unknown battery level.';
 
+
+  static const EventChannel eventChargingChannel = EventChannel('samples.flutter.io/charging');
+  String _chargingStatus = 'Battery status: unknownuuu.';
+  void _onChargingEvent(Object event) {
+    setState(() {
+      _chargingStatus =
+      "Battery status: ${event == 'charging' ? '' : 'dis'}chargingooo.";
+    });
+  }
+
+  void _onChargingError(Object error) {
+    setState(() {
+      _chargingStatus = 'Battery status: unknown.';
+    });
+  }
+  static const EventChannel eventSensorChannel = EventChannel('samples.flutter.io/sensor');
+  String _sensing = "jj";
+  void _onSensingEvent(Object event) {
+    setState(() {
+      _sensing = event;
+
+    });
+  }
+
+  void _onSensingError(Object error) {
+    setState(() {
+      _chargingStatus = 'Battery status:ggn.';
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    eventChargingChannel.receiveBroadcastStream().listen(_onChargingEvent, onError: _onChargingError);
+    eventSensorChannel.receiveBroadcastStream().listen(_onSensingEvent, onError: _onSensingError);
+  }
   Future<void> _getBatteryLevel() async {
     String batteryLevel;
     try {
@@ -82,25 +117,28 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Material(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            RaisedButton(
-              child: Text('Get Battery Level'),
-              onPressed: _getBatteryLevel,
-            ),
-            Text(_batteryLevel),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(_batteryLevel, key: const Key('Battery level label')),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: RaisedButton(
+                  child: const Text('Refresh'),
+                  onPressed: _getBatteryLevel,
+                ),
+              ),
+            ],
+          ),
+          Text(_chargingStatus),
+          Text(_sensing)
+        ],
       ),
     );
   }
