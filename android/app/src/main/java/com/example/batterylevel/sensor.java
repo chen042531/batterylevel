@@ -7,6 +7,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import io.flutter.plugin.common.EventChannel;
 
 import static android.content.Context.SENSOR_SERVICE;
@@ -32,7 +34,13 @@ public class sensor implements SensorEventListener {
     }
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        eve.success(String.valueOf(sensorEvent.values[0]));
+//        ArrayList a = new ArrayList();
+//        a.add(sensorEvent.values[0]);
+//        a.add(sensorEvent.values[1]);
+//        a.add(sensorEvent.values[2]);
+        eve.success(String.valueOf(sensorEvent.values[0])+"  "+
+                String.valueOf(sensorEvent.values[1])+"  "+
+                String.valueOf(sensorEvent.values[2]));
         Log.i("ren", String.valueOf(sensorEvent.values[0]));
     }
 

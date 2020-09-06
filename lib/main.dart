@@ -55,15 +55,15 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   static const platform = const MethodChannel('samples.flutter.dev/battery');
-  String _batteryLevel = 'Unknown battery level.';
+  String _batteryLevel = '未知電量.';
 
 
   static const EventChannel eventChargingChannel = EventChannel('samples.flutter.io/charging');
-  String _chargingStatus = 'Battery status: unknownuuu.';
+  String _chargingStatus = '電池狀態: unknown.';
   void _onChargingEvent(Object event) {
     setState(() {
       _chargingStatus =
-      "Battery status: ${event == 'charging' ? '' : 'dis'}chargingooo.";
+      "電池狀態: ${event == 'charging' ? '' : 'dis'}charging.";
     });
   }
 
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String batteryLevel;
     try {
       final int result = await platform.invokeMethod('getBatteryLevel');
-      batteryLevel = 'Battery level at $result % .';
+      batteryLevel = '電池電量 $result % .';
     } on PlatformException catch (e) {
       batteryLevel = "Failed to get battery level: '${e.message}'.";
     }
